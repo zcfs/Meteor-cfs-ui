@@ -13,6 +13,6 @@ Package.on_use(function(api) {
 });
 
 Package.on_test(function (api) {
-  api.use(['collectionFS', 'test-helpers', 'tinytest']);
+  api.use(['collectionfs', 'test-helpers', 'tinytest']);
   api.add_files('tests/client-tests.js', 'client');
 });
