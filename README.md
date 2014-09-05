@@ -8,7 +8,7 @@ Provides additional UI helpers for CollectionFS. Requires Meteor 0.8.0 or higher
 Install using Meteorite. When in a Meteor app directory, enter:
 
 ```
-$ mrt add cfs-ui
+$ meteor add cfs:ui
 ```
 
 ## Helpers
