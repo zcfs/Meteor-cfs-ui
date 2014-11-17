@@ -1,7 +1,8 @@
 Package.describe({
   name: 'cfs:ui',
   version: '0.0.0',
-  summary: 'CollectionFS, provides UI helpers'
+  summary: 'CollectionFS, provides UI helpers',
+  git: 'https://github.com/CollectionFS/Meteor-cfs-ui.git'
 });
 
 Package.on_use(function(api) {
