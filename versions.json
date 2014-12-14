@@ -50,7 +50,7 @@
     ],
     [
       "follower-livedata",
-      "1.0.0"
+      "1.0.1"
     ],
     [
       "geojson-utils",
@@ -58,7 +58,7 @@
     ],
     [
       "htmljs",
-      "1.0.0-cordova1"
+      "1.0.0"
     ],
     [
       "http",
@@ -82,7 +82,7 @@
     ],
     [
       "logging",
-      "1.0.0"
+      "1.0.2"
     ],
     [
       "meteor",
@@ -90,7 +90,7 @@
     ],
     [
       "minimongo",
-      "1.0.0"
+      "1.0.2"
     ],
     [
       "mongo",
@@ -102,7 +102,7 @@
     ],
     [
       "observe-sequence",
-      "1.0.0"
+      "1.0.2"
     ],
     [
       "ordered-dict",
@@ -118,7 +118,7 @@
     ],
     [
       "reactive-var",
-      "1.0.1-rc0"
+      "1.0.1"
     ],
     [
       "retry",
@@ -130,7 +130,7 @@
     ],
     [
       "tracker",
-      "1.0.2-rc1"
+      "1.0.2"
     ],
     [
       "underscore",
@@ -138,6 +138,6 @@
     ]
   ],
   "pluginDependencies": [],
-  "toolVersion": "meteor-tool@1.0.27",
+  "toolVersion": "meteor-tool@1.0.36",
   "format": "1.0"
 }

@@ -1,7 +1,3 @@
-function equals(a, b) {
-  return !!(EJSON.stringify(a) === EJSON.stringify(b));
-}
-
 Tinytest.add('cfs-ui - client - test environment', function(test) {
   test.isTrue(typeof FS.Collection !== 'undefined', 'test environment not initialized FS.Collection');
 });

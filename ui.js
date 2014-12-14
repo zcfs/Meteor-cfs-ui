@@ -1,7 +1,11 @@
+/* global Helpers:true */
+/* global Template */
+/* global FS */
+
 Helpers = {};
 
 // We expose the properties of Helpers on `FS` globally
-UI.registerHelper('FS', Helpers);
+Template.registerHelper('FS', Helpers);
 
 // Usage: {{#with FS.GetFile collectionName id}}{{/with}}
 Helpers.GetFile = function cfsGetFile(collectionName, id) {
@@ -27,65 +31,67 @@ Template._fs_DeleteButton2.events({
 // Usage: {{> FS.UploadProgressBar attribute=value}} (with FS.File as current context or not for overall)
 Helpers.UploadProgressBar = Template._fs_UploadProgressBar;
 
-Template._fs_UploadProgressBar.getAttsAndFileObj = function getAttsAndFileObj(atts, fileObj) {
-  if (atts instanceof FS.File) {
-    fileObj = atts;
-    atts = {};
-  } else {
-    atts = atts || {};
-  }
+Template._fs_UploadProgressBar.helpers({
+  getAttsAndFileObj: function getAttsAndFileObj(atts, fileObj) {
+    if (atts instanceof FS.File) {
+      fileObj = atts;
+      atts = {};
+    } else {
+      atts = atts || {};
+    }
 
-  var progressFunc;
-  if (fileObj instanceof FS.File) {
-    progressFunc = function () {
-      return fileObj.uploadProgress();
+    var progressFunc;
+    if (fileObj instanceof FS.File) {
+      progressFunc = function () {
+        return fileObj.uploadProgress();
+      };
+    } else {
+      progressFunc = function () {
+        return FS.HTTP.uploadQueue.progress();
+      };
+    }
+
+    // We clone atts so that we can remove bootstrap or semantic props without losing them for
+    // later reactive reruns.
+    atts = FS.Utility.extend({}, atts);
+
+    var useBootstrap = false, useSemantic = false;
+    if (atts.semantic) {
+      useSemantic = true;
+      if (typeof atts["class"] === "string") {
+        atts["class"] += " ui progress";
+      } else {
+        atts["class"] = "ui progress";
+      }
+      delete atts.semantic;
+    } else if (atts.bootstrap) {
+      useBootstrap = true;
+      var progress = progressFunc();
+      if (typeof atts["class"] === "string") {
+        atts["class"] += " progress-bar";
+      } else {
+        atts["class"] = "progress-bar";
+      }
+      if (typeof atts.style === "string") {
+        atts.style += " width: " + progress + "%;";
+      } else {
+        atts.style = "width: " + progress + "%;";
+      }
+      atts.role = "progressbar";
+      atts["aria-valuenow"] = ''+progress;
+      atts["aria-valuemin"] = "0";
+      atts["aria-valuemax"] = "100";
+      delete atts.bootstrap;
+    }
+
+    return {
+      progress: progressFunc,
+      atts: atts,
+      useBootstrap: useBootstrap,
+      useSemantic: useSemantic
     };
-  } else {
-    progressFunc = function () {
-      return FS.HTTP.uploadQueue.progress();
-    };
   }
-
-  // We clone atts so that we can remove bootstrap or semantic props without losing them for
-  // later reactive reruns.
-  atts = FS.Utility.extend({}, atts);
-
-  var useBootstrap = false, useSemantic = false;
-  if (atts.semantic) {
-    useSemantic = true;
-    if (typeof atts["class"] === "string") {
-      atts["class"] += " ui progress";
-    } else {
-      atts["class"] = "ui progress";
-    }
-    delete atts.semantic;
-  } else if (atts.bootstrap) {
-    useBootstrap = true;
-    var progress = progressFunc();
-    if (typeof atts["class"] === "string") {
-      atts["class"] += " progress-bar";
-    } else {
-      atts["class"] = "progress-bar";
-    }
-    if (typeof atts["style"] === "string") {
-      atts["style"] += " width: " + progress + "%;";
-    } else {
-      atts["style"] = "width: " + progress + "%;";
-    }
-    atts.role = "progressbar";
-    atts["aria-valuenow"] = ''+progress;
-    atts["aria-valuemin"] = "0";
-    atts["aria-valuemax"] = "100";
-    delete atts.bootstrap;
-  }
-
-  return {
-    progress: progressFunc,
-    atts: atts,
-    useBootstrap: useBootstrap,
-    useSemantic: useSemantic
-  };
-};
+});
 
 FS.EventHandlers = {};
 
@@ -95,13 +101,15 @@ FS.EventHandlers.insertFiles = function cfsInsertFiles(collection, options) {
   var afterCallback = options.after;
   var metadataCallback = options.metadata;
 
-  function insertFilesHandler(event, template) {
+  function insertFilesHandler(event) {
     FS.Utility.eachFile(event, function (file) {
       var f = new FS.File(file);
-      metadataCallback && FS.Utility.extend(f, metadataCallback(f));
+      if (metadataCallback) {
+        FS.Utility.extend(f, metadataCallback(f));
+      }
       collection.insert(f, afterCallback);
     });
-  };
+  }
 
   return insertFilesHandler;
 };
