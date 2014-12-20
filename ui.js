@@ -55,7 +55,7 @@ Template._fs_UploadProgressBar.helpers({
     // later reactive reruns.
     atts = FS.Utility.extend({}, atts);
 
-    var useBootstrap = false, useSemantic = false;
+    var useBootstrap = false, useSemantic = false, show_percentage = false;
     if (atts.semantic) {
       useSemantic = true;
       if (typeof atts["class"] === "string") {
@@ -77,6 +77,7 @@ Template._fs_UploadProgressBar.helpers({
       } else {
         atts.style = "width: " + progress + "%;";
       }
+      if (atts.showPercent) show_percentage = true;
       atts.role = "progressbar";
       atts["aria-valuenow"] = ''+progress;
       atts["aria-valuemin"] = "0";
@@ -87,6 +88,7 @@ Template._fs_UploadProgressBar.helpers({
     return {
       progress: progressFunc,
       atts: atts,
+      showPercent : show_percentage,
       useBootstrap: useBootstrap,
       useSemantic: useSemantic
     };

@@ -74,7 +74,11 @@ By default, an HTML5 progress element is rendered. To render a bootstrap3 progre
 {{> FS.UploadProgressBar bootstrap=true}}
 ```
 
-Any HTML attributes you add, such as class, are added to the `div.progress-bar`, so you could add the `progress-bar-success` class, for instance, but you can't add `progress-striped` or `active` classes to `div.progress`.
+Any HTML attributes you add, such as class, are added to the `div.progress-bar`, so you could add the `progress-bar-success` class. With the most recent version of bootstrap, it is valid to add `progress-striped` or `active` classes to `div.progress-bar`, so these attributes would also be acceptable. An additional option to show the percantage text on top of the progress bar is toggled using the `showPercent` attribute. An example of a green, striped, animated progress bar with the percantage text overlayed is shown below.
+
+```html
+{{> FS.UploadProgressBar bootstrap=true class='progress-bar-success progress-bar-striped active' showPercent=true}}
+```
 
 To render a semantic-ui progress bar instead:
 

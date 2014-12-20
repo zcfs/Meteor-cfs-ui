@@ -11,7 +11,11 @@
   {{#if this.useBootstrap}}
   <div class="progress">
   	<div {{this.atts}}>
-	   <span class="sr-only">{{this.progress}}% Complete</span>
+        {{#if this.showPercent}}
+        {{this.progress}}%
+        {{else}}
+	    <span class="sr-only">{{this.progress}}% Complete</span>
+        {{/if}}
     </div>
   </div>
   {{else}}
