@@ -133,4 +133,4 @@ Template.files.events({
 });
 ```
 
-By using this function to create your event handlers for input change events and the `dropped` event (provided by the `ui-dropped-event` package), you don't have to write any of the code to loop over files, convert `File` to `FS.File`, attach metadata, or perform the insert.
+By using this function to create your event handlers for input change events and the `dropped` event (provided by the `raix:ui-dropped-event` package), you don't have to write any of the code to loop over files, convert `File` to `FS.File`, attach metadata, or perform the insert.
