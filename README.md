@@ -15,7 +15,7 @@ Provides additional UI helpers for CollectionFS. Requires Meteor 0.8.0 or higher
 Install using Meteorite. When in a Meteor app directory, enter:
 
 ```
-$ meteor add cfs:ui
+$ meteor add zcfs:ui
 ```
 
 ## Helpers
